@@ -1,12 +1,20 @@
 {
   "license": "MIT",
+  "version": "0.1.0",
   "private": "true",
+  "name": "electron-iohook-demo",
+  "description": "Demo project for electron-iohook",
   "scripts": {
     "build": "rm -rf build && webpack --progress --mode development",
     "start": "yarn build && electron .",
-    "pack": "electron-builder build --mac"
+    "dist": "rm -rf dist && electron-builder build --mac --dir -c.mac.identity=null"
   },
   "main": "build/index.js",
+  "repository": "git@github.com:tylerlong/electron-iohook-demo.git",
+  "author": {
+    "name": "Tyler Liu",
+    "email": "tyler4long@gmail.com"
+  },
   "dependencies": {
     "electron-iohook": "^0.1.0"
   },
