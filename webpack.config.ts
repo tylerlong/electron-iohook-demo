@@ -14,21 +14,37 @@ const config: Configuration = {
         loader: 'ts-loader',
       },
       {
-        test: /\.node$/,
+        test: /\/macOS\/.*\.node$/,
         loader: 'node-loader',
+        options: {
+          name: 'macOS/[name].[ext]',
+        },
+      },
+      {
+        test: /\/windows\/.*\.node$/,
+        loader: 'node-loader',
+        options: {
+          name: 'windows/[name].[ext]',
+        },
       },
     ],
   },
   plugins: [
     new CopyPlugin({
       patterns: [
-        {from: '**/uiohook.dylib', to: '[name][ext]'},
-        {from: '**/uiohook.dll', to: '[name][ext]'},
+        {
+          from: '**/macOS/*.dylib',
+          to: 'macOS/[name][ext]',
+        },
+        {
+          from: '**/windows/*.dll',
+          to: 'windows/[name][ext]',
+        },
       ],
     }),
   ],
   watchOptions: {
-    ignored: ['**/uiohook.dylib', '**/uiohook.dll'],
+    ignored: ['**/dist/**'],
   },
 };
 
