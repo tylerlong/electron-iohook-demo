@@ -1,5 +1,8 @@
 # electron-iohook-demo
 
+Demo project for [electron-iohook](https://github.com/tylerlong/electron-iohook).
+
+
 ## Run
 
 ```

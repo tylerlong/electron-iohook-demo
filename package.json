@@ -1,5 +1,6 @@
 {
   "license": "MIT",
+  "private": "true",
   "scripts": {
     "start": "tsc && electron ."
   },
