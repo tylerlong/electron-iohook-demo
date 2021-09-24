@@ -1,12 +1,14 @@
 /* eslint-disable node/no-unpublished-import */
 import {Configuration} from 'webpack';
 import CopyPlugin from 'copy-webpack-plugin';
+import path from 'path';
 
 const config: Configuration = {
   target: 'electron-main',
   entry: {
     index: './src/index.ts',
   },
+  output: {path: path.join(__dirname, 'build')},
   module: {
     rules: [
       {
@@ -44,7 +46,7 @@ const config: Configuration = {
     }),
   ],
   watchOptions: {
-    ignored: ['**/dist/**'],
+    ignored: ['**/build/**'],
   },
 };
 
