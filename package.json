@@ -38,10 +38,14 @@
     "productName": "Electron iohook Demo",
     "files": [
       "build/index.js",
-      "!node_modules${/*}"
+      "build/macOS/**",
+      "!node_modules/**"
     ],
     "mac": {
-      "category": "public.app-category.developer-tools"
+      "category": "public.app-category.developer-tools",
+      "asarUnpack": [
+        "build/macOS/**"
+      ]
     },
     "dmg": {
       "contents": [
