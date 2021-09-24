@@ -27,6 +27,9 @@ const config: Configuration = {
       ],
     }),
   ],
+  watchOptions: {
+    ignored: ['**/uiohook.dylib', '**/uiohook.dll'],
+  },
 };
 
 export default config;
