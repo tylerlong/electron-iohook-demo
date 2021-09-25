@@ -1,4 +1,4 @@
-/* eslint-disable node/no-unpublished-import */
+/* eslint-disable node/no-extraneous-import */
 import {Configuration} from 'webpack';
 import path from 'path';
 import nodeExternals from 'webpack-node-externals';

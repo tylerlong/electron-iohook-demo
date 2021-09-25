@@ -1,4 +1,7 @@
 {
+  "name": "common",
+  "version": "0.1.0",
+  "description": "Common code for all Electron Apps.",
   "license": "MIT",
-  "name": "common"
+  "private": "true"
 }

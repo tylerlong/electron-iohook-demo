@@ -2,9 +2,12 @@
 // import {build, Platform, DIR_TARGET} from 'electron-builder';
 import inquirer from 'inquirer';
 import {Command} from 'commander';
+import webpack from 'webpack';
+import path from 'path';
 
 import {yarn, appNames} from './utils';
 // import config from '../common/electron-builder';
+import webpackConfig from '../common/webpack.config';
 
 const commands = ['build', 'start', 'release', 'prepare', 'test'];
 
@@ -15,6 +18,18 @@ const commands = ['build', 'start', 'release', 'prepare', 'test'];
 
 const build = async (app: string) => {
   console.log(`Build ${app}`);
+  webpackConfig.context = path.join(__dirname, '..', 'apps', app);
+  const compiler = webpack(webpackConfig);
+  compiler.run(err => {
+    if (err !== null) {
+      throw err;
+    }
+    compiler.close(err => {
+      if (err !== null) {
+        throw err;
+      }
+    });
+  });
 };
 
 const runCommand = async (app: string, command: string) => {
