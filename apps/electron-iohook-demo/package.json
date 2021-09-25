@@ -1,7 +1,6 @@
 {
   "license": "MIT",
   "version": "0.1.0",
-  "private": "true",
   "name": "electron-iohook-demo",
   "description": "Demo project for electron-iohook",
   "scripts": {

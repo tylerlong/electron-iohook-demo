@@ -1,5 +1,8 @@
 {
   "license": "MIT",
+  "scripts": {
+    "reset": "lerna clean -y && lerna bootstrap && lerna exec 'yarn unlink && yarn link' --scope=common && lerna exec 'yarn link common' --ignore=common"
+  },
   "devDependencies": {
     "@types/node": "^16.9.6",
     "gts": "^3.1.0",
