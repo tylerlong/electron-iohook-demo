@@ -5,6 +5,7 @@ import {Command} from 'commander';
 import webpack from 'webpack';
 import path from 'path';
 import nodeExternals from 'webpack-node-externals';
+import fs from 'fs';
 
 import {yarn, appNames} from './utils';
 // import config from '../common/electron-builder';
@@ -45,6 +46,26 @@ const start = async (app: string) => {
   await yarn('lerna', 'exec', 'electron .', `--scope=${app}`);
 };
 
+const release = async (app: string) => {
+  await build(app);
+  console.log('release done');
+};
+
+const prepare = async (app: string) => {
+  await build(app);
+  console.log('prepare done');
+};
+
+const test = async (app: string) => {
+  const testFile = path.join(__dirname, '..', 'apps', app, 'src', 'test.ts');
+  if (fs.existsSync(testFile)) {
+    await yarn('lerna', 'exec', 'ts-node ./src/test.ts', `--scope=${app}`);
+  } else {
+    console.log(`${testFile} doesn't exist`);
+  }
+};
+
+// invoke the correct method
 const runCommand = async (app: string, command: string) => {
   switch (command) {
     case 'build': {
@@ -56,12 +77,15 @@ const runCommand = async (app: string, command: string) => {
       break;
     }
     case 'release': {
+      await release(app);
       break;
     }
     case 'prepare': {
+      await prepare(app);
       break;
     }
     case 'test': {
+      await test(app);
       break;
     }
     default: {
