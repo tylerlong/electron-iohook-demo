@@ -13,6 +13,34 @@ const commands = ['build', 'start', 'release', 'prepare', 'test'];
 //   targets: Platform.MAC.createTarget(DIR_TARGET),
 // });
 
+const build = async (app: string) => {
+  console.log(`Build ${app}`);
+};
+
+const runCommand = async (app: string, command: string) => {
+  switch (command) {
+    case 'build': {
+      await build(app);
+      break;
+    }
+    case 'start': {
+      break;
+    }
+    case 'release': {
+      break;
+    }
+    case 'prepare': {
+      break;
+    }
+    case 'test': {
+      break;
+    }
+    default: {
+      throw new Error(`Unknown command, ${command}`);
+    }
+  }
+};
+
 // parse command args
 const program = new Command();
 program
@@ -55,6 +83,5 @@ if (command && command.length > 2) {
   }
 
   // run the command
-  // await runCommand(app, command);
-  console.log(app, command);
+  await runCommand(app, command);
 })();
