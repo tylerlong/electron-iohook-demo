@@ -1,5 +1,5 @@
 /* eslint-disable node/no-unpublished-import */
-// import {build, Platform, DIR_TARGET} from 'electron-builder';
+import {build as electronBuild, Platform, DIR_TARGET} from 'electron-builder';
 import inquirer from 'inquirer';
 import {Command} from 'commander';
 import webpack from 'webpack';
@@ -7,8 +7,8 @@ import path from 'path';
 import nodeExternals from 'webpack-node-externals';
 import fs from 'fs';
 
-import {yarn, appNames} from './utils';
-// import config from '../common/electron-builder';
+import {yarn, appNames, appPath} from './utils';
+import electronBuilderConfig from '../common/electron-builder';
 import webpackConfig from '../common/webpack.config';
 
 const commands = ['build', 'start', 'release', 'prepare', 'test'];
@@ -19,7 +19,7 @@ const commands = ['build', 'start', 'release', 'prepare', 'test'];
 // });
 
 const build = async (app: string) => {
-  const appDir = path.join(__dirname, '..', 'apps', app);
+  const appDir = appPath(app);
   webpackConfig.context = appDir;
   webpackConfig.mode = 'development';
   webpackConfig.externals = [
@@ -53,7 +53,15 @@ const release = async (app: string) => {
 
 const prepare = async (app: string) => {
   await build(app);
-  console.log('prepare done');
+  const appDir = appPath(app);
+  electronBuild({
+    config: {
+      ...electronBuilderConfig,
+      directories: {app: appDir, output: path.join(appDir, 'dist')},
+      mac: {...electronBuilderConfig.mac, identity: null}, // to disable code signing
+    },
+    targets: Platform.MAC.createTarget(DIR_TARGET),
+  });
 };
 
 const test = async (app: string) => {

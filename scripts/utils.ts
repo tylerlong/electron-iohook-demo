@@ -21,3 +21,5 @@ export const yarn = (...args: readonly string[]) => {
 export const appNames = fs
   .readdirSync(path.join(__dirname, '..', 'apps'))
   .filter(name => !name.startsWith('.'));
+
+export const appPath = (app: string) => path.join(__dirname, '..', 'apps', app);
