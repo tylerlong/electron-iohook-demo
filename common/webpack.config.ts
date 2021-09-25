@@ -11,7 +11,7 @@ const config: Configuration = {
   output: {
     path: path.join(__dirname, 'build'),
   },
-  externals: [nodeExternals()],
+  externals: [nodeExternals() as any],
   module: {
     rules: [
       {

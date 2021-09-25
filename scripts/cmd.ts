@@ -4,6 +4,7 @@ import inquirer from 'inquirer';
 import {Command} from 'commander';
 import webpack from 'webpack';
 import path from 'path';
+import {ProgressPlugin} from 'webpack';
 
 import {yarn, appNames} from './utils';
 // import config from '../common/electron-builder';
@@ -20,6 +21,12 @@ const build = async (app: string) => {
   console.log(`Build ${app}`);
   webpackConfig.context = path.join(__dirname, '..', 'apps', app);
   const compiler = webpack(webpackConfig);
+  const progressPlugin = new ProgressPlugin(
+    (percentage: number, message: string) => {
+      console.log(percentage * 100 + '%', message);
+    }
+  );
+  progressPlugin.apply(compiler);
   compiler.run(err => {
     if (err !== null) {
       throw err;

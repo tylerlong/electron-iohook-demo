@@ -4,7 +4,8 @@
     "outDir": "build",
     "esModuleInterop": true,
   },
-  "include": [
-    "**/*.ts",
+  "exclude": [
+    "**/build",
+    "**/dist",
   ],
 }
