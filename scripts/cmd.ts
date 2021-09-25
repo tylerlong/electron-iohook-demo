@@ -4,6 +4,7 @@ import inquirer from 'inquirer';
 import {Command} from 'commander';
 import webpack from 'webpack';
 import path from 'path';
+import nodeExternals from 'webpack-node-externals';
 
 import {yarn, appNames} from './utils';
 // import config from '../common/electron-builder';
@@ -17,12 +18,31 @@ const commands = ['build', 'start', 'release', 'prepare', 'test'];
 // });
 
 const build = async (app: string) => {
-  console.log(`Build ${app}`);
-  webpackConfig.context = path.join(__dirname, '..', 'apps', app);
+  const appDir = path.join(__dirname, '..', 'apps', app);
+  webpackConfig.context = appDir;
   webpackConfig.mode = 'development';
+  webpackConfig.externals = [
+    nodeExternals({modulesDir: path.join(appDir, 'node_modules')}),
+  ];
+  webpackConfig.output = {
+    path: path.join(appDir, 'build'),
+  };
   webpack(webpackConfig, (err, stats) => {
-    console.log(err, stats?.toJson());
+    if (err !== null) {
+      throw err;
+    }
+    const errors = stats?.toJson().errors;
+    if (errors?.length === 0) {
+      console.log('Successfully built', app);
+    } else {
+      console.log(errors);
+    }
   });
+};
+
+const start = async (app: string) => {
+  console.log('start', app);
+  await yarn('lerna', 'exec', 'electron .', `--scope=${app}`);
 };
 
 const runCommand = async (app: string, command: string) => {
@@ -32,6 +52,7 @@ const runCommand = async (app: string, command: string) => {
       break;
     }
     case 'start': {
+      await start(app);
       break;
     }
     case 'release': {
