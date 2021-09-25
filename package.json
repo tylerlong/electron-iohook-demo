@@ -6,7 +6,7 @@
   "scripts": {
     "upgrade-all": "yarn-upgrade-all && lerna exec yarn-upgrade-all",
     "reset": "lerna clean -y && lerna bootstrap && lerna exec 'yarn unlink && yarn link' --scope=common && lerna exec 'yarn link common' --ignore=common",
-    "cmd": "ts-node -r dotenv-override-true ./scripts/cmd.ts"
+    "cmd": "ts-node -r dotenv-override-true/config ./scripts/cmd.ts"
   },
   "devDependencies": {
     "@tylerlong/electron-notarize": "^1.1.1",
