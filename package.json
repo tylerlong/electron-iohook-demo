@@ -7,7 +7,7 @@
   "scripts": {
     "build": "rm -rf build && webpack --progress --mode development",
     "start": "yarn build && electron .",
-    "dist": "rm -rf dist && electron-builder build --mac --dir -c.mac.identity=null"
+    "dist": "yarn build && rm -rf dist && electron-builder build --mac --dir -c.mac.identity=null"
   },
   "main": "build/index.js",
   "repository": "git@github.com:tylerlong/electron-iohook-demo.git",
@@ -22,6 +22,7 @@
   "devDependencies": {
     "@types/copy-webpack-plugin": "^8.0.1",
     "@types/node": "^16.9.6",
+    "@types/webpack-node-externals": "^2.5.2",
     "copy-webpack-plugin": "^9.0.1",
     "electron": "^15.0.0",
     "electron-builder": "^22.11.7",
@@ -32,21 +33,17 @@
     "typescript": "^4.4.3",
     "webpack": "^5.53.0",
     "webpack-cli": "^4.8.0",
+    "webpack-node-externals": "^3.0.0",
     "yarn-upgrade-all": "^0.5.4"
   },
   "build": {
     "appId": "electron-iohook-demo.chuntaoliu.com",
     "productName": "Electron iohook Demo",
     "files": [
-      "build/index.js",
-      "build/macOS/**",
-      "!node_modules/**"
+      "build/index.js"
     ],
     "mac": {
-      "category": "public.app-category.developer-tools",
-      "asarUnpack": [
-        "build/macOS/**"
-      ]
+      "category": "public.app-category.developer-tools"
     },
     "dmg": {
       "contents": [
