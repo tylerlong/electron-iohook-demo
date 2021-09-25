@@ -74,7 +74,11 @@ const check = async (app: string) => {
   await electronBuild({
     config: {
       ...electronBuilderConfig,
-      directories: {app: appDir, output: path.join(appDir, 'dist')},
+      directories: {
+        app: appDir,
+        output: path.join(appDir, 'dist'),
+        buildResources: path.join(appDir, 'build'),
+      },
       mac: {...electronBuilderConfig.mac, identity: null}, // to disable code signing
     },
     targets: Platform.MAC.createTarget(DIR_TARGET),
