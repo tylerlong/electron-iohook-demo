@@ -6,13 +6,15 @@
   "scripts": {
     "upgrade-all": "yarn-upgrade-all && lerna exec yarn-upgrade-all",
     "reset": "lerna clean -y && lerna bootstrap && lerna exec 'yarn unlink && yarn link' --scope=common && lerna exec 'yarn link common' --ignore=common",
-    "cmd": "ts-node ./scripts/cmd.ts"
+    "cmd": "ts-node -r dotenv-override-true ./scripts/cmd.ts"
   },
   "devDependencies": {
+    "@tylerlong/electron-notarize": "^1.1.1",
     "@types/inquirer": "^8.1.2",
     "@types/node": "^16.10.1",
     "@types/webpack-node-externals": "^2.5.2",
     "commander": "^8.2.0",
+    "dotenv-override-true": "^6.2.2",
     "electron": "^15.0.0",
     "electron-builder": "^22.11.7",
     "electron-log": "^4.4.1",

@@ -4,6 +4,12 @@ import {Configuration} from 'electron-builder';
 const config: Configuration = {
   appId: 'electron-iohook-demo.chuntaoliu.com',
   productName: 'Electron iohook Demo',
+  publish: [
+    {
+      provider: 'github',
+      releaseType: 'release',
+    },
+  ],
   files: ['build/index.js'],
   mac: {
     category: 'public.app-category.developer-tools',
