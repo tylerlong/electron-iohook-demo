@@ -4,6 +4,7 @@
     "node": ">=14"
   },
   "scripts": {
+    "upgrade-all": "yarn-upgrade-all && lerna exec yarn-upgrade-all",
     "reset": "lerna clean -y && lerna bootstrap && lerna exec 'yarn unlink && yarn link' --scope=common && lerna exec 'yarn link common' --ignore=common",
     "cmd": "ts-node ./scripts/cmd.ts"
   },
