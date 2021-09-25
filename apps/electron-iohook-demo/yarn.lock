@@ -2,12 +2,7 @@
 # yarn lockfile v1
 
 
-electron-iohook@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/electron-iohook/-/electron-iohook-0.1.0.tgz#9bdfb6dd437100b89454b54fe67edf01cfa9d99e"
-  integrity sha512-EtiOx28liajAMcsbLxmAr/lDWoGNM3QI2JscR37csq1ZgRghHd6Fb2vXhCRrOqcaaBwtIR2M+TAPgwnoVdsfFA==
-
-electron-log@^4.4.1:
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/electron-log/-/electron-log-4.4.1.tgz#28ebeb474eccba2ebf194a96c40d6328e5353e4d"
-  integrity sha512-nK/DwxPLtwWbggPCm27eMQhYHc3gzoZ+cokBK99diO4WsZJKrv5l44EUW8mRfWpmC8ZubnMyp6GTUIJyTc9AJA==
+electron-iohook@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/electron-iohook/-/electron-iohook-0.1.1.tgz#02e969cd31455d9809114263818a78bd5ecb83ec"
+  integrity sha512-7/pKG0m89GntoGMGmxMvm49W58gy4fXXIET8yvn9qEgog0H86zYlhvsYrc8DXACp+SsYvYOAnAJ76btCWQjGRQ==

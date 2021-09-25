@@ -6,12 +6,13 @@ import webpack from 'webpack';
 import path from 'path';
 import nodeExternals from 'webpack-node-externals';
 import fs from 'fs';
+import os from 'os';
 
-import {yarn, appNames, appPath} from './utils';
+import {run, appNames, appPath} from './utils';
 import electronBuilderConfig from '../common/electron-builder';
 import webpackConfig from '../common/webpack.config';
 
-const commands = ['build', 'start', 'release', 'prepare', 'test'];
+const commands = ['build', 'start', 'check', 'release', 'test'];
 
 const build = async (app: string) => {
   return new Promise<void>((resolve, reject) => {
@@ -42,7 +43,7 @@ const build = async (app: string) => {
 };
 
 const start = async (app: string) => {
-  await yarn('lerna', 'exec', 'electron .', `--scope=${app}`);
+  await run('yarn', 'lerna', 'exec', 'electron .', `--scope=${app}`);
 };
 
 const release = async (app: string) => {
@@ -70,11 +71,11 @@ const release = async (app: string) => {
   });
 };
 
-const prepare = async (app: string) => {
+const check = async (app: string) => {
   const appDir = appPath(app);
   fs.rmSync(path.join(appDir, 'dist'), {recursive: true, force: true});
   await build(app);
-  electronBuild({
+  await electronBuild({
     config: {
       ...electronBuilderConfig,
       directories: {app: appDir, output: path.join(appDir, 'dist')},
@@ -82,12 +83,27 @@ const prepare = async (app: string) => {
     },
     targets: Platform.MAC.createTarget(DIR_TARGET),
   });
+  await run(
+    'open',
+    path.join(appDir, 'dist', 'mac', electronBuilderConfig.productName + '.app')
+  );
+  await run(
+    'tail',
+    '-f',
+    path.join(os.homedir(), 'Library', 'Logs', app, 'main.log')
+  );
 };
 
 const test = async (app: string) => {
   const testFile = path.join(__dirname, '..', 'apps', app, 'src', 'test.ts');
   if (fs.existsSync(testFile)) {
-    await yarn('lerna', 'exec', 'ts-node ./src/test.ts', `--scope=${app}`);
+    await run(
+      'yarn',
+      'lerna',
+      'exec',
+      'ts-node ./src/test.ts',
+      `--scope=${app}`
+    );
   } else {
     console.log(`${testFile} doesn't exist`);
   }
@@ -104,12 +120,12 @@ const runCommand = async (app: string, command: string) => {
       await start(app);
       break;
     }
-    case 'release': {
-      await release(app);
+    case 'check': {
+      await check(app);
       break;
     }
-    case 'prepare': {
-      await prepare(app);
+    case 'release': {
+      await release(app);
       break;
     }
     case 'test': {

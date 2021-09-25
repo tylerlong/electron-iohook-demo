@@ -10,7 +10,6 @@
     "email": "tyler4long@gmail.com"
   },
   "dependencies": {
-    "electron-iohook": "^0.1.0",
-    "electron-log": "^4.4.1"
+    "electron-iohook": "^0.1.1"
   }
 }

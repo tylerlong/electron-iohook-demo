@@ -6,8 +6,10 @@ Demo project for [electron-iohook](https://github.com/tylerlong/electron-iohook)
 ## Run
 
 ```
-yarn install
-yarn start
+yarn cmd
 ```
 
-Click mouse and watch the console.
+
+## Notes
+
+- Native node modules should be installed to target app `deps`, other node modules should be installed to root `devDeps`.

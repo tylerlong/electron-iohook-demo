@@ -2,8 +2,8 @@ import {spawn} from 'child_process';
 import fs from 'fs';
 import path from 'path';
 
-export const yarn = (...args: readonly string[]) => {
-  const childProcess = spawn('yarn', args, {stdio: 'inherit'});
+export const run = (command: string, ...args: readonly string[]) => {
+  const childProcess = spawn(command, args, {stdio: 'inherit'});
   return new Promise<void>((resolve, reject) => {
     childProcess.once(
       'exit',
