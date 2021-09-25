@@ -1,13 +1,26 @@
 {
   "license": "MIT",
   "scripts": {
-    "reset": "lerna clean -y && lerna bootstrap && lerna exec 'yarn unlink && yarn link' --scope=common && lerna exec 'yarn link common' --ignore=common"
+    "reset": "lerna clean -y && lerna bootstrap && lerna exec 'yarn unlink && yarn link' --scope=common && lerna exec 'yarn link common' --ignore=common",
+    "cmd": "ts-node ./scripts/cmd.ts"
   },
   "devDependencies": {
-    "@types/node": "^16.9.6",
+    "@types/inquirer": "^8.1.2",
+    "@types/node": "^16.10.1",
+    "@types/webpack-node-externals": "^2.5.2",
+    "commander": "^8.2.0",
+    "electron": "^15.0.0",
+    "electron-builder": "^22.11.7",
     "gts": "^3.1.0",
+    "inquirer": "^8.1.5",
     "lerna": "^4.0.0",
+    "node-loader": "^2.0.0",
+    "ts-loader": "^9.2.6",
+    "ts-node": "^10.2.1",
     "typescript": "^4.4.3",
+    "webpack": "^5.54.0",
+    "webpack-cli": "^4.8.0",
+    "webpack-node-externals": "^3.0.0",
     "yarn-upgrade-all": "^0.5.4"
   }
 }
