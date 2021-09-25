@@ -111,7 +111,11 @@ const release = async (app: string) => {
     win: ['default'],
     config: {
       ...electronBuilderConfig,
-      directories: {app: appDir, output: path.join(appDir, 'dist')},
+      directories: {
+        app: appDir,
+        output: path.join(appDir, 'dist'),
+        buildResources: path.join(appDir, 'build'),
+      },
       afterSign: async (context: AfterPackContext) => {
         if (context.electronPlatformName === 'darwin') {
           await notarize({
