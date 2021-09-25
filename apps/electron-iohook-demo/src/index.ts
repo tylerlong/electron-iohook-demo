@@ -1,5 +1,5 @@
 import ioHook, {IOHookEvent} from 'electron-iohook';
-// eslint-disable-next-line node/no-unpublished-import
+// eslint-disable-next-line node/no-extraneous-import
 import {app} from 'electron';
 import log from 'electron-log';
 

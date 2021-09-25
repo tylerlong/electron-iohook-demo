@@ -3,12 +3,6 @@
   "version": "0.1.0",
   "name": "electron-iohook-demo",
   "description": "Demo project for electron-iohook",
-  "scripts": {
-    "build": "rm -rf build && webpack --progress --mode development",
-    "start": "yarn build && electron .",
-    "dist": "yarn build && rm -rf dist && electron-builder build --mac --dir -c.mac.identity=null",
-    "cmd": "rm -rf dist && ts-node cmd.ts"
-  },
   "main": "build/index.js",
   "repository": "git@github.com:tylerlong/electron-iohook-demo.git",
   "author": {

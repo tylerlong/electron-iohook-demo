@@ -13,13 +13,9 @@ import webpackConfig from '../common/webpack.config';
 
 const commands = ['build', 'start', 'release', 'prepare', 'test'];
 
-// build({
-//   config: {...config, mac: {...config.mac, identity: null}}, // config.mac.identity = null to disable code signing
-//   targets: Platform.MAC.createTarget(DIR_TARGET),
-// });
-
 const build = async (app: string) => {
   const appDir = appPath(app);
+  fs.rmdirSync(path.join(appDir, 'build'));
   webpackConfig.context = appDir;
   webpackConfig.mode = 'development';
   webpackConfig.externals = [
@@ -47,13 +43,16 @@ const start = async (app: string) => {
 };
 
 const release = async (app: string) => {
+  const appDir = appPath(app);
+  fs.rmdirSync(path.join(appDir, 'dist'));
   await build(app);
-  console.log('release done');
+  // todo: release
 };
 
 const prepare = async (app: string) => {
-  await build(app);
   const appDir = appPath(app);
+  fs.rmdirSync(path.join(appDir, 'dist'));
+  await build(app);
   electronBuild({
     config: {
       ...electronBuilderConfig,
