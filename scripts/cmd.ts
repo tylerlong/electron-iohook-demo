@@ -14,44 +14,65 @@ import webpackConfig from '../common/webpack.config';
 const commands = ['build', 'start', 'release', 'prepare', 'test'];
 
 const build = async (app: string) => {
-  const appDir = appPath(app);
-  fs.rmdirSync(path.join(appDir, 'build'));
-  webpackConfig.context = appDir;
-  webpackConfig.mode = 'development';
-  webpackConfig.externals = [
-    nodeExternals({modulesDir: path.join(appDir, 'node_modules')}),
-  ];
-  webpackConfig.output = {
-    path: path.join(appDir, 'build'),
-  };
-  webpack(webpackConfig, (err, stats) => {
-    if (err !== null) {
-      throw err;
-    }
-    const errors = stats?.toJson().errors;
-    if (errors?.length === 0) {
-      console.log('Successfully built', app);
-    } else {
-      console.log(errors);
-    }
+  return new Promise<void>((resolve, reject) => {
+    const appDir = appPath(app);
+    fs.rmSync(path.join(appDir, 'build'), {recursive: true, force: true});
+    webpackConfig.context = appDir;
+    webpackConfig.mode = 'development';
+    webpackConfig.externals = [
+      nodeExternals({modulesDir: path.join(appDir, 'node_modules')}),
+    ];
+    webpackConfig.output = {
+      path: path.join(appDir, 'build'),
+    };
+    webpack(webpackConfig, (err, stats) => {
+      if (err !== null) {
+        throw err;
+      }
+      const errors = stats?.toJson().errors;
+      if (errors?.length === 0) {
+        console.log('Successfully built', app);
+        resolve();
+      } else {
+        console.log(errors);
+        reject(errors);
+      }
+    });
   });
 };
 
 const start = async (app: string) => {
-  console.log('start', app);
   await yarn('lerna', 'exec', 'electron .', `--scope=${app}`);
 };
 
 const release = async (app: string) => {
   const appDir = appPath(app);
-  fs.rmdirSync(path.join(appDir, 'dist'));
+  fs.rmSync(path.join(appDir, 'dist'), {recursive: true, force: true});
   await build(app);
-  // todo: release
+
+  // copy images to right folder
+  fs.copyFileSync(
+    path.join(__dirname, '..', 'common', 'background.png'),
+    path.join(appDir, 'build', 'background.png')
+  );
+  fs.copyFileSync(
+    path.join(appDir, 'icon.png'),
+    path.join(appDir, 'build', 'icon.png')
+  );
+
+  electronBuild({
+    mac: ['default'],
+    win: ['default'],
+    config: {
+      ...electronBuilderConfig,
+      directories: {app: appDir, output: path.join(appDir, 'dist')},
+    },
+  });
 };
 
 const prepare = async (app: string) => {
   const appDir = appPath(app);
-  fs.rmdirSync(path.join(appDir, 'dist'));
+  fs.rmSync(path.join(appDir, 'dist'), {recursive: true, force: true});
   await build(app);
   electronBuild({
     config: {
